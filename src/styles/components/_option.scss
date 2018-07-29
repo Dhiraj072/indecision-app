@@ -1,0 +1,17 @@
+// Widget element
+.option {
+    color: $off-white;
+    margin: 0;
+    padding: $m-size;
+    border-bottom: 1px solid lighten($light-blue, 5%);;
+    display: flex;
+    justify-content: space-between;
+}
+
+.option__text {
+    color: $white;
+    font-weight: 500;
+    font-size: 2rem;
+    margin: 0;
+    word-break: break-all;   
+}
