@@ -53,4 +53,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* [Andrew Mead](https://mead.io/) for his excellent [udemy course](https://www.udemy.com/react-2nd-edition/)
+* [Andrew Mead](https://mead.io/) for his excellent [udemy course](https://www.udemy.com/react-2nd-edition/) where I built this app.
