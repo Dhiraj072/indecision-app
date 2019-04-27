@@ -1,3 +1,5 @@
 node_modules/
 public/dist
 .vscode
+.terraform/
+public/bundle.js
