@@ -1,7 +1,7 @@
 # Indecision-App
 
 A web application to manage your to-do lists. 
-Demo application is running live [here](https://indecision.dappsr.com/). 
+Demo application is running live [here](https://indecision-app.dappsr.com/). 
 
 
 The application uses browser's [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). Hence how long your to-do lists are persisted depends on your [browser settings](https://stackoverflow.com/questions/9948284/how-persistent-is-localstorage/9948339). You will lose them if you clean your browser data manually.
