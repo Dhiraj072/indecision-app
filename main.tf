@@ -2,6 +2,11 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
+provider "aws" {
+  alias = "global"
+  region = "us-east-1"
+}
+
 terraform {
   backend "s3" {
     bucket = "tfm-states"
@@ -36,6 +41,15 @@ resource "aws_s3_bucket" "indecision_app" {
 }
 POLICY
 }
+
+data "aws_acm_certificate" "dappsr" {
+  provider = "aws.global"
+
+  domain = "dappsr.com"
+  statuses = ["ISSUED"]
+  most_recent = true
+}
+
 
 locals {
   s3_origin_id = "indecisionAppS3Origin"
@@ -75,7 +89,7 @@ resource "aws_cloudfront_distribution" "indecision_app" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "arn:aws:acm:us-east-1:733012925755:certificate/902834b3-14a9-4b59-889a-0b3ceedb4586"
+    acm_certificate_arn = "${data.aws_acm_certificate.dappsr.arn}"
     ssl_support_method = "sni-only"
   }
 }
@@ -94,3 +108,4 @@ resource "aws_route53_record" "indecision_app" {
     evaluate_target_health = false
   }
 }
+
