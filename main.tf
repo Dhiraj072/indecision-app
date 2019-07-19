@@ -15,9 +15,14 @@ terraform {
   }
 }
 
+locals {
+  s3_origin_id = "indecisionAppS3Origin"
+  app_name = "indecision-app"
+}
+
 // S3 bucket with website files
 resource "aws_s3_bucket" "indecision_app" {
-  bucket = "indecision-app.dappsr.com"
+  bucket = "${local.app_name}.dappsr.com"
   acl    = "public-read"
   website {
     index_document = "index.html"
@@ -34,7 +39,7 @@ resource "aws_s3_bucket" "indecision_app" {
         "s3:GetObject"
       ],
       "Resource": [
-        "arn:aws:s3:::indecision-app.dappsr.com/*"
+        "arn:aws:s3:::${local.app_name}.dappsr.com/*"
       ]
     }
   ]
@@ -50,11 +55,6 @@ data "aws_acm_certificate" "dappsr" {
   most_recent = true
 }
 
-
-locals {
-  s3_origin_id = "indecisionAppS3Origin"
-}
-
 // Cloudfront distribution for the s3 bucket
 resource "aws_cloudfront_distribution" "indecision_app" {
   origin {
@@ -64,7 +64,7 @@ resource "aws_cloudfront_distribution" "indecision_app" {
   
   enabled = true
   default_root_object = "index.html"
-   aliases = ["indecision-app.dappsr.com"]
+   aliases = ["${local.app_name}.dappsr.com"]
   
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -100,7 +100,7 @@ data "aws_route53_zone" "dappsr" {
 
 resource "aws_route53_record" "indecision_app" {
   zone_id = "${data.aws_route53_zone.dappsr.zone_id}"
-  name    = "indecision-app.dappsr.com"
+  name    = "${local.app_name}.dappsr.com"
   type    = "A"
   alias {
     name                   = "${aws_cloudfront_distribution.indecision_app.domain_name}"
